@@ -29,8 +29,11 @@ namespace IVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(); 
-            services.AddScoped<IVC.User.Domain.IWrite, IVC.User.Data.Write>();
+            services.AddMvc();
+             
+            string connectionString = Configuration.GetSection("ConnectionStrings").GetSection("IVCConnectionString").Value;
+            //services.AddScoped<IVC.User.Domain.IWrite, IVC.User.Data.Write>();
+            services.AddTransient<IVC.User.Domain.IWrite>(s => new IVC.User.Data.Write(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,6 +57,8 @@ namespace IVC
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+             
         }
          
     }

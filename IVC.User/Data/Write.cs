@@ -9,6 +9,13 @@ namespace IVC.User.Data
 {
     public class Write : IVC.User.Domain.IWrite
     {
+        private string connectionString = string.Empty;
+
+        public Write(string connectionString)
+        {
+            this.connectionString = connectionString;
+        }
+         
         public Response<int?> InsertUpdateUser(IVC.User.DTO.User user)
         {
             Response<int?> response = new Response<int?>
