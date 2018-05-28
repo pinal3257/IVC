@@ -15,7 +15,7 @@ namespace IVC.User.Data
         {
             this.connectionString = connectionString;
         }
-         
+
         public Response<int?> InsertUpdateUser(IVC.User.DTO.User user)
         {
             Response<int?> response = new Response<int?>
@@ -24,6 +24,22 @@ namespace IVC.User.Data
                 Message = "",
                 Content = null
             };
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                if (connection.State != ConnectionState.Open)
+                    connection.Open();
+
+                SqlCommand cmd = new SqlCommand("sp_insert", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@FirstName", SqlDbType.VarChar).Value = user.FirstName;
+                cmd.Parameters.Add("@LastName", SqlDbType.VarChar).Value = user.LastName;
+                cmd.Parameters.Add("@Email", SqlDbType.VarChar).Value = user.Email;
+                 
+                cmd.ExecuteNonQuery();
+
+            }
 
             return response;
         }

@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Data.SqlClient" Version="4.4.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\IVC.Return\IVC.Return.csproj" />
   </ItemGroup>
 
